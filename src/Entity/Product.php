@@ -7,6 +7,7 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ApiResource]
@@ -30,6 +31,7 @@ class Product
     private $brand;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductDeclination::class, orphanRemoval: true)]
+    #[ApiSubresource]
     private $productDeclinations;
 
     public function __construct()

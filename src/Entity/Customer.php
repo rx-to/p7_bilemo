@@ -2,12 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\CustomerRepository;
+use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\CustomerRepository;
+use App\Entity\CustomerProductDeclination;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: CustomerRepository::class)]
+#[ApiResource]
 class Customer implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -43,6 +49,7 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     private $customerProductDeclinations;
 
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: User::class, orphanRemoval: true)]
+    #[ApiSubresource]
     private $users;
 
     public function getId(): ?int

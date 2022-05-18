@@ -9,7 +9,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductDeclinationRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    itemOperations: [
+        'get' => [
+            'method' => 'GET',
+            'path' => '/products/{id}/declinations',
+        ],
+    ],
+)]
 class ProductDeclination
 {
     #[ORM\Id]

@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CustomerRepository;
-use App\Entity\CustomerProductDeclination;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
@@ -44,9 +43,6 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 20)]
     private $phone_number;
-
-    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: CustomerProductDeclination::class, orphanRemoval: true)]
-    private $customerProductDeclinations;
 
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: User::class, orphanRemoval: true)]
     #[ApiSubresource]
@@ -197,36 +193,6 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhoneNumber(string $phone_number): self
     {
         $this->phone_number = $phone_number;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, CustomerProductDeclination>
-     */
-    public function getCustomerProductDeclinations(): Collection
-    {
-        return $this->customerProductDeclinations;
-    }
-
-    public function addCustomerProductDeclination(CustomerProductDeclination $customerProductDeclination): self
-    {
-        if (!$this->customerProductDeclinations->contains($customerProductDeclination)) {
-            $this->customerProductDeclinations[] = $customerProductDeclination;
-            $customerProductDeclination->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCustomerProductDeclination(CustomerProductDeclination $customerProductDeclination): self
-    {
-        if ($this->customerProductDeclinations->removeElement($customerProductDeclination)) {
-            // set the owning side to null (unless already changed)
-            if ($customerProductDeclination->getCustomer() === $this) {
-                $customerProductDeclination->setCustomer(null);
-            }
-        }
 
         return $this;
     }

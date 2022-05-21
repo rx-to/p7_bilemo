@@ -4,10 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ProductRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ApiResource]
@@ -30,14 +27,11 @@ class Product
     #[ORM\Column(type: 'string', length: 255)]
     private $brand;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductDeclination::class, orphanRemoval: true)]
-    #[ApiSubresource]
-    private $productDeclinations;
+    #[ORM\Column(type: 'string', length: 50)]
+    private $color;
 
-    public function __construct()
-    {
-        $this->productDeclinations = new ArrayCollection();
-    }
+    #[ORM\Column(type: 'integer')]
+    private $storage;
 
     public function getId(): ?int
     {
@@ -92,32 +86,26 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, ProductDeclination>
-     */
-    public function getProductDeclinations(): Collection
+    public function getColor(): ?string
     {
-        return $this->productDeclinations;
+        return $this->color;
     }
 
-    public function addProductDeclination(ProductDeclination $productDeclination): self
+    public function setColor(string $color): self
     {
-        if (!$this->productDeclinations->contains($productDeclination)) {
-            $this->productDeclinations[] = $productDeclination;
-            $productDeclination->setProduct($this);
-        }
+        $this->color = $color;
 
         return $this;
     }
 
-    public function removeProductDeclination(ProductDeclination $productDeclination): self
+    public function getStorage(): ?string
     {
-        if ($this->productDeclinations->removeElement($productDeclination)) {
-            // set the owning side to null (unless already changed)
-            if ($productDeclination->getProduct() === $this) {
-                $productDeclination->setProduct(null);
-            }
-        }
+        return $this->storage;
+    }
+
+    public function setStorage(string $storage): self
+    {
+        $this->storage = $storage;
 
         return $this;
     }

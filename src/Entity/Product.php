@@ -2,12 +2,18 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProductRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']],
+    collectionOperations: ['get'],
+    itemOperations: ['get'],
+)]
 class Product
 {
     #[ORM\Id]
@@ -16,21 +22,27 @@ class Product
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
     private $operating_system;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["read", "write"])]
     private $megapixels;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
     private $brand;
 
     #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(["read", "write"])]
     private $color;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["read", "write"])]
     private $storage;
 
     public function getId(): ?int

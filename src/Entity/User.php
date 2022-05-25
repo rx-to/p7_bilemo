@@ -2,48 +2,67 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\UserRepository;
+use App\Controller\CreateUser;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']],
+    collectionOperations: ['get', 'post'],
+    itemOperations: ['get', 'delete'],
+)]
 class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["write"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
     private $surname;
 
     #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(["read", "write"])]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
     private $email;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
     private $address;
 
     #[ORM\Column(type: 'string', length: 5)]
+    #[Groups(["read", "write"])]
     private $zip_code;
 
     #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(["read", "write"])]
     private $city;
 
     #[ORM\Column(type: 'string', length: 20)]
+    #[Groups(["read", "write"])]
     private $phone_number;
 
     #[ORM\Column(type: 'string', length: 5)]
+    #[Groups(["read", "write"])]
     private $personal_title;
 
     #[ORM\Column(type: 'date')]
+    #[Groups(["read", "write"])]
     private $birthdate;
 
     #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups("write")]
     private $customer;
 
     public function getId(): ?int

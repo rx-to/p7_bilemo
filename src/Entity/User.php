@@ -2,10 +2,8 @@
 
 namespace App\Entity;
 
-use App\Controller\CreateUser;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -42,7 +40,7 @@ class User
 
     #[ORM\Column(type: 'string', length: 5)]
     #[Groups(["read", "write"])]
-    private $zip_code;
+    private $zipCode;
 
     #[ORM\Column(type: 'string', length: 50)]
     #[Groups(["read", "write"])]
@@ -50,11 +48,11 @@ class User
 
     #[ORM\Column(type: 'string', length: 20)]
     #[Groups(["read", "write"])]
-    private $phone_number;
+    private $phoneNumber;
 
     #[ORM\Column(type: 'string', length: 5)]
     #[Groups(["read", "write"])]
-    private $personal_title;
+    private $personalTitle;
 
     #[ORM\Column(type: 'date')]
     #[Groups(["read", "write"])]
@@ -120,12 +118,12 @@ class User
 
     public function getZipCode(): ?string
     {
-        return $this->zip_code;
+        return $this->zipCode;
     }
 
-    public function setZipCode(string $zip_code): self
+    public function setZipCode(string $zipCode): self
     {
-        $this->zip_code = $zip_code;
+        $this->zipCode = $zipCode;
 
         return $this;
     }
@@ -144,24 +142,24 @@ class User
 
     public function getPhoneNumber(): ?string
     {
-        return $this->phone_number;
+        return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(string $phone_number): self
+    public function setPhoneNumber(string $phoneNumber): self
     {
-        $this->phone_number = $phone_number;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
 
     public function getPersonalTitle(): ?string
     {
-        return $this->personal_title;
+        return $this->personalTitle;
     }
 
-    public function setPersonalTitle(string $personal_title): self
+    public function setPersonalTitle(string $personalTitle): self
     {
-        $this->personal_title = $personal_title;
+        $this->personalTitle = $personalTitle;
 
         return $this;
     }

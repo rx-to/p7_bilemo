@@ -11,8 +11,22 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     normalizationContext: ['groups' => ['read']],
     denormalizationContext: ['groups' => ['write']],
-    collectionOperations: ['get', 'post'],
-    itemOperations: ['get', 'delete'],
+    collectionOperations: [
+        'get' => [
+            'path' => '/users',
+            'controller' => \App\Controller\GetUsersController::class,
+            'method' => 'GET'
+        ], 'post'
+    ],
+    itemOperations: [
+        'get' => [
+            'path' => '/users/{id}',
+            'controller' => \App\Controller\GetUserController::class,
+            'method' => 'GET'
+        ],
+        'delete'
+    ],
+
 )]
 class User
 {

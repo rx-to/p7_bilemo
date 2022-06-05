@@ -45,6 +45,9 @@ class Product
     #[Groups(["read", "write"])]
     private $storage;
 
+    #[ORM\Column(type: 'float')]
+    private $price;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -118,6 +121,18 @@ class Product
     public function setStorage(string $storage): self
     {
         $this->storage = $storage;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }
